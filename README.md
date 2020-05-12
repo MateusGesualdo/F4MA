@@ -1,50 +1,56 @@
-# LAMBDA + API GATEWAY + EXPRESS TEMPLATE
+# F4MA
 
-## EM QUAIS ARQUIVOS É PROIBIDO MEXER?
+## Stack
 
-Não mexa nesses arquivos:
+* Express
+* MySql
+* Knex
+* Uuid
+* Dotenv
 
-1. `src/lambda/*` (ou seja, em nenhum arquivo dentro dessa pasta)
-1. `src/local/*` (ou seja, em nenhum arquivo dentro dessa pasta)
+## Running the project
 
-## Rodando localmente
+1. Clone this repository into your machine
+1. Open your CLI inside the cloned repo and run the following commands:
 
-Use o comando:
+   * `npm install`
+   * `touch .env`
+   * `start .env`
+  
+1. Paste the following environment variables into your **.env** file, replacing their values for those of your own SQL database:
+    ```
+    DB_HOST = mysql
+    DB_USER = me
+    DB_PASSWORD = xxxxxx
+    DB_NAME = myschema
+    JWT_KEY = xxxxxx
+    ```
+1. Run the following queries on your SQL database:
+    ```SQL
+      CREATE TABLE f4ma_bands (
+        id VARCHAR(255) PRIMARY KEY,
+        name VARCHAR(255) UNIQUE NOT NULL,
+        music_genre VARCHAR(255) NOT NULL,
+        responsible VARCHAR(255) NOT NULL
+    );
+    ```
+    ```SQL
+      CREATE TABLE f4ma_shows (
+        id VARCHAR(255) PRIMARY KEY,
+        week_day VARCHAR(255) NOT NULL,
+        start_time INT(11) NOT NULL,
+        end_time INT(11) NOT NULL,
+        band_id VARCHAR(255),
+        FOREIGN KEY (band_id) REFERENCES f4ma_bands (id)
+    );
+    ```
+    
+1. Run `npm run start` on your CLI
 
-```
-npm run start:dev
-```
+1. Open your browser's *localhost* and test the endpoints using this project's own GUI. You'll find templates for all available requests, but feel free to send them via other softwares such as Postman.
 
-## Deploy em uma Lambda
+## Note
 
-Você deve começar criando um build do projeto
-
-```
-npm run build
-```
-
-Então, subir o arquivo compactado `lambda.zip` que foi gerado nesse processo na função de Lambda que você quiser usar
-
-## Como eu crio um novo endpoint?
-
-Esse projeto é baseado em uma arquitetura em camadas, divida em três:
-
-- Business: contém todas as lógicas de negócio e a modelagem dos dados
-  principais
-
-- Data: responsável pela comunicação no banco que, neste caso, é um MySQL
-
-- Presentation: cuida de transformar os dados de entrada e saída nos modelos
-  apropriados
-
-Quando for criar um endpoint, certifique-se que passou por todos esses passos:
-
-[] Verifique se precisará criar uma nova entidade ou modificar alguma já existente.
-Uma entidade é um modelo que representa alguma informação na nossa regra de negócios (`src/business/entity`)
-
-[] Comece criando o use case com o nome apropriado na pasta `src/business/usecase`.
-Lembre-se de criar um novo Gateway (`src/business/gateway`) ou alterar algum existente se precisar se comunicar com o banco, já que utilizamos inversão de dependências
-
-[] Realize as implementações do banco necessárias alterando alguma classe já existente (`src/data`). Se for mexer com uma tabela nova, crie uma nova classe na pasta que seja filha da classe `BaseDatabase` e implemente ao menos algum Gateway
-
-[] Crie um novo endpoint na presentation em `src/presentation/endpoint` e, então, crie uma nova rota do express no arquivo `src/presentation/routes`
+When creating a new show:
+  * Key `day` must be either `FRIDAY`, `SATURDAY` or `SUNDAY`
+  * Keys `startTime` and `endTime` must be an integer number of hours between 00 and 23

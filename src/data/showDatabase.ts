@@ -60,6 +60,7 @@ export class ShowDatabase extends BaseDatabase implements ShowGateway {
     } catch (err) {
       throw new Error(err.sqlMessage)
     }
+
   }
 
   public async getShowsByDay(day: ShowWeekDay): Promise<ShowWithBand[]> {
