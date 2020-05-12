@@ -25,7 +25,7 @@
   1.Run the following queries on your SQL database:
 
    ```SQL
-   CREATE TABLE future_book_users (
+   CREATE TABLE  (
        id VARCHAR(255) PRIMARY KEY,
        name VARCHAR(255) UNIQUE NOT NULL,
        email VARCHAR(255) UNIQUE NOT NULL,
@@ -34,7 +34,7 @@
    ```
    
    ```SQL
-   CREATE TABLE future_book_friends (
+   CREATE TABLE  (
        user_id VARCHAR(255),
        friend_id VARCHAR(255),
        PRIMARY KEY (user_id , friend_id),
@@ -44,7 +44,7 @@
    ```
    
    ```SQL
-   CREATE TABLE future_book_posts (
+   CREATE TABLE  (
        id VARCHAR(255) PRIMARY KEY,
        author_id VARCHAR(255),
        description VARCHAR(255),
@@ -56,7 +56,7 @@
    ```
    
    ```SQL
-   CREATE TABLE future_book_likes (
+   CREATE TABLE  (
        friend_id VARCHAR(255),
        post_id VARCHAR(255),
        PRIMARY KEY (friend_id , post_id),
@@ -66,7 +66,7 @@
    ```
    
    ```SQL
-   CREATE TABLE future_book_comments (
+   CREATE TABLE  (
        id VARCHAR(255) PRIMARY KEY,
        friend_id VARCHAR(255),
        post_id VARCHAR(255),
@@ -77,4 +77,4 @@
    ```
 1. Run npm run start on your CLI
 
-Open your browser's localhost and test the endpoints using this project's own GUI. You'll find templates for all available requests, but feel free to send them via other softwares such as Postman.
+1. Open your browser's localhost and test the endpoints using this project's own GUI. You'll find templates for all available requests, but feel free to send them via other softwares such as Postman.
