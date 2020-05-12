@@ -1,50 +1,72 @@
-# LAMBDA + API GATEWAY + EXPRESS TEMPLATE
+# F4MA
 
-## EM QUAIS ARQUIVOS É PROIBIDO MEXER?
+## Stack
 
-Não mexa nesses arquivos:
+## Running the project
 
-1. `src/lambda/*` (ou seja, em nenhum arquivo dentro dessa pasta)
-1. `src/local/*` (ou seja, em nenhum arquivo dentro dessa pasta)
+1. Clone this repository into your machine
+1. Open your CLI inside the cloned repo and run the following commands:
 
-## Rodando localmente
+  * npm install
+  * touch .env
+  * start .env
+  
+1. Paste the following environment variables into your **.env** file, replacing their values for those of your own SQL database:
 
-Use o comando:
+  ```
+   DB_HOST = mysql
+   DB_USER = me
+   DB_PASSWORD = xxxxxx
+   DB_NAME = mytable      
+   
+   JWT_KEY = xxxxxx
+  ```
+  
+  1.Run the following queries on your SQL database:
 
-```
-npm run start:dev
-```
+  ```CREATE TABLE future_book_users (
+      id VARCHAR(255) PRIMARY KEY,
+      name VARCHAR(255) UNIQUE NOT NULL,
+      email VARCHAR(255) UNIQUE NOT NULL,
+      password VARCHAR(255) UNIQUE
+  );```
+  
+  ```CREATE TABLE future_book_friends (
+      user_id VARCHAR(255),
+      friend_id VARCHAR(255),
+      PRIMARY KEY (user_id , friend_id),
+      FOREIGN KEY (user_id) REFERENCES future_book_users (id),
+      FOREIGN KEY (friend_id) REFERENCES future_book_users (id)
+  );```
+  
+  ```CREATE TABLE future_book_posts (
+      id VARCHAR(255) PRIMARY KEY,
+      author_id VARCHAR(255),
+      description VARCHAR(255),
+      creation_date DATETIME,
+      type VARCHAR(255),
+      img VARCHAR(255),
+      FOREIGN KEY (author_id) REFERENCES future_book_users (id)
+  );```
+  
+  ```CREATE TABLE future_book_likes (
+      friend_id VARCHAR(255),
+      post_id VARCHAR(255),
+      PRIMARY KEY (friend_id , post_id),
+      FOREIGN KEY (friend_id) REFERENCES future_book_users (id),
+      FOREIGN KEY (post_id) REFERENCES future_book_posts (id)
+  );```
+  
+  ```CREATE TABLE future_book_comments (
+      id VARCHAR(255) PRIMARY KEY,
+      friend_id VARCHAR(255),
+      post_id VARCHAR(255),
+      comment_text VARCHAR(255),
+      FOREIGN KEY (friend_id) REFERENCES future_book_users (id),
+      FOREIGN KEY (post_id) REFERENCES future_book_posts (id)
+  );
+  ```
+  
+Run npm run start on your CLI
 
-## Deploy em uma Lambda
-
-Você deve começar criando um build do projeto
-
-```
-npm run build
-```
-
-Então, subir o arquivo compactado `lambda.zip` que foi gerado nesse processo na função de Lambda que você quiser usar
-
-## Como eu crio um novo endpoint?
-
-Esse projeto é baseado em uma arquitetura em camadas, divida em três:
-
-- Business: contém todas as lógicas de negócio e a modelagem dos dados
-  principais
-
-- Data: responsável pela comunicação no banco que, neste caso, é um MySQL
-
-- Presentation: cuida de transformar os dados de entrada e saída nos modelos
-  apropriados
-
-Quando for criar um endpoint, certifique-se que passou por todos esses passos:
-
-[] Verifique se precisará criar uma nova entidade ou modificar alguma já existente.
-Uma entidade é um modelo que representa alguma informação na nossa regra de negócios (`src/business/entity`)
-
-[] Comece criando o use case com o nome apropriado na pasta `src/business/usecase`.
-Lembre-se de criar um novo Gateway (`src/business/gateway`) ou alterar algum existente se precisar se comunicar com o banco, já que utilizamos inversão de dependências
-
-[] Realize as implementações do banco necessárias alterando alguma classe já existente (`src/data`). Se for mexer com uma tabela nova, crie uma nova classe na pasta que seja filha da classe `BaseDatabase` e implemente ao menos algum Gateway
-
-[] Crie um novo endpoint na presentation em `src/presentation/endpoint` e, então, crie uma nova rota do express no arquivo `src/presentation/routes`
+Open your browser's localhost and test the endpoints using this project's own GUI. You'll find templates for all available requests, but feel free to send them via other softwares such as Postman.
