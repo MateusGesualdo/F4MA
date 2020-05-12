@@ -48,3 +48,9 @@
 1. Run `npm run start` on your CLI
 
 1. Open your browser's *localhost* and test the endpoints using this project's own GUI. You'll find templates for all available requests, but feel free to send them via other softwares such as Postman.
+
+## Note
+
+When creating a new show:
+  * Key `day` must be either `FRIDAY`, `SATURDAY` or `SUNDAY`
+  * Keys `startTime` and `endTime` must be an integer number of hours between 00 and 23
