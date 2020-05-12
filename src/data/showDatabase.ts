@@ -58,23 +58,6 @@ export class ShowDatabase extends BaseDatabase implements ShowGateway {
   `);
   }
 
-  public async getShowWithBandByTimeRange(
-    startTime: number,
-    endTime: number,
-    weekDay: ShowWeekDay
-  ): Promise<ShowWithBand[]> {
-    const result = await this.connection.raw(`
-      SELECT s.*, b.name, b.music_genre, b.responsible FROM ${this.showTableName} s 
-      LEFT JOIN ${this.foreignBandTableName} b ON b.id = s.band_id 
-      WHERE 
-        week_day = '${weekDay}' AND
-        ((s.start_time <= ${startTime} AND s.end_time > ${startTime}) OR
-        (s.start_time < ${endTime} AND s.end_time >= ${endTime}))
-    `);
-
-    return result[0].map(this.fromDBWithBand);
-  }
-
   public async getShowsByDay(day: ShowWeekDay): Promise<ShowWithBand[]> {
     const result = await this.connection.raw(`
       SELECT * FROM ${this.showTableName} s
