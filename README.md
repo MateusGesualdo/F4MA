@@ -25,7 +25,7 @@
     DB_HOST = mysql
     DB_USER = me
     DB_PASSWORD = xxxxxx
-    DB_NAME = mytable
+    DB_NAME = myschema
     JWT_KEY = xxxxxx
     ```
 1. Run the following queries on your SQL database:
