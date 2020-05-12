@@ -18,32 +18,46 @@ export class BandDatabase extends BaseDatabase implements BandGateway {
   }
 
   public async createBand(band: Band): Promise<void> {
-    await this.connection.raw(`
-      INSERT INTO ${this.bandTableName} (id, name, music_genre, responsible)
-      VALUES(
-        '${band.getId()}',
-        '${band.getName()}',
-        '${band.getMusicGenre()}',
-        '${band.getResponsible()}'
-      )
-    `);
+    try {
+      await this.connection.raw(`
+        INSERT INTO ${this.bandTableName} (id, name, music_genre, responsible)
+        VALUES(
+          '${band.getId()}',
+          '${band.getName()}',
+          '${band.getMusicGenre()}',
+          '${band.getResponsible()}'
+        )
+      `);
+    } catch (err) {
+      throw new Error(err.message)
+    }
   }
 
   public async getBandById(id: string): Promise<Band | undefined> {
-    const result = await this.connection.raw(`
-      SELECT * FROM ${this.bandTableName}
-      WHERE id = '${id}'
-    `);
+    try {
+      const result = await this.connection.raw(`
+        SELECT * FROM ${this.bandTableName}
+        WHERE id = '${id}'
+      `);
+      return this.fromDB(result[0][0]);
 
-    return this.fromDB(result[0][0]);
+    } catch (err) {
+      throw new Error(err.message)
+    }
+
+
   }
 
   public async getBandByName(name: string): Promise<Band | undefined> {
-    const result = await this.connection.raw(`
+    try {
+      const result = await this.connection.raw(`
       SELECT * FROM ${this.bandTableName}
       WHERE name LIKE '%${name}%'
     `);
+      return this.fromDB(result[0][0]);
 
-    return this.fromDB(result[0][0]);
+    } catch (err) {
+      throw new Error(err.message)
+    }
   }
 }
