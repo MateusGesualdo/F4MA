@@ -2,6 +2,15 @@
 
 ## Stack
 
+* Express
+* MySql
+* Knex
+* Uuid
+* Bcrypt
+* JsonWebToken
+* Dotenv
+* Cors
+
 ## Running the project
 
 1. Clone this repository into your machine
