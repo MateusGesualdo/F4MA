@@ -39,6 +39,6 @@
     );
     ```
     
-1. Run npm run start on your CLI
+1. Run `npm run start` on your CLI
 
 1. Open your browser's localhost and test the endpoints using this project's own GUI. You'll find templates for all available requests, but feel free to send them via other softwares such as Postman.
