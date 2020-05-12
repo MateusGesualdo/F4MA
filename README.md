@@ -19,7 +19,7 @@
     DB_NAME = mytable
     JWT_KEY = xxxxxx
     ```
-1.Run the following queries on your SQL database:
+1. Run the following queries on your SQL database:
 
     
 1. Run npm run start on your CLI
