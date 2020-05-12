@@ -44,44 +44,36 @@ export class ShowDatabase extends BaseDatabase implements ShowGateway {
   }
 
   public async createShow(show: Show): Promise<void> {
-    await this.connection.raw(`
-      INSERT INTO ${
+    try {
+      await this.connection.raw(`
+        INSERT INTO ${
         this.showTableName
-      } (id, week_day, start_time, end_time, band_id)
-      VALUES(
-        '${show.getId()}',
-        '${show.getWeekDate()}',
-        '${show.getStartTime()}',
-        '${show.getEndTime()}',
-        '${show.getBandId()}'
-      )
-  `);
-  }
-
-  public async getShowWithBandByTimeRange(
-    startTime: number,
-    endTime: number,
-    weekDay: ShowWeekDay
-  ): Promise<ShowWithBand[]> {
-    const result = await this.connection.raw(`
-      SELECT s.*, b.name, b.music_genre, b.responsible FROM ${this.showTableName} s 
-      LEFT JOIN ${this.foreignBandTableName} b ON b.id = s.band_id 
-      WHERE 
-        week_day = '${weekDay}' AND
-        ((s.start_time <= ${startTime} AND s.end_time > ${startTime}) OR
-        (s.start_time < ${endTime} AND s.end_time >= ${endTime}))
-    `);
-
-    return result[0].map(this.fromDBWithBand);
+        } (id, week_day, start_time, end_time, band_id)
+        VALUES(
+          '${show.getId()}',
+          '${show.getWeekDate()}',
+          '${show.getStartTime()}',
+          '${show.getEndTime()}',
+          '${show.getBandId()}'
+        )
+      `);
+    } catch (err) {
+      throw new Error(err.sqlMessage)
+    }
   }
 
   public async getShowsByDay(day: ShowWeekDay): Promise<ShowWithBand[]> {
-    const result = await this.connection.raw(`
-      SELECT * FROM ${this.showTableName} s
-      LEFT JOIN ${this.foreignBandTableName} b ON b.id = s.band_id
-      WHERE s.week_day = '${day}'
-    `);
+    try {
+      const result = await this.connection.raw(`
+        SELECT * FROM ${this.showTableName} s
+        LEFT JOIN ${this.foreignBandTableName} b ON b.id = s.band_id
+        WHERE s.week_day = '${day}'
+      `);
 
-    return result[0].map(this.fromDBWithBand);
+      return result[0].map(this.fromDBWithBand);
+      
+    } catch (err) {
+      throw new Error(err.sqlMessage)
+    }
   }
 }

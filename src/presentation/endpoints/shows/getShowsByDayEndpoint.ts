@@ -24,8 +24,12 @@ export default async function getShowsByDayEndpoint(req: Request, res: Response)
                 throw new Error("Dia inválido")
         }
 
-        res.status(200).send(shows)
+        res
+            .status(200)
+            .send({ shows })
     } catch (err) {
-        res.status(err.code || 400).send(err.message)
+        res
+            .status(err.code || 400)
+            .send({ message: err.message })
     }
 }
