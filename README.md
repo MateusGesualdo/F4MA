@@ -19,7 +19,6 @@
   DB_NAME = mytable
   JWT_KEY = xxxxxx
   ```
-  
 1.Run the following queries on your SQL database:
 
     
