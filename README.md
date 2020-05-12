@@ -21,23 +21,23 @@
     ```
 1. Run the following queries on your SQL database:
   ```SQL
-  CREATE TABLE f4ma_bands (
-    id VARCHAR(255) PRIMARY KEY,
-    name VARCHAR(255) UNIQUE NOT NULL,
-    music_genre VARCHAR(255) NOT NULL,
-    responsible VARCHAR(255) NOT NULL
-);
-```
+    CREATE TABLE f4ma_bands (
+      id VARCHAR(255) PRIMARY KEY,
+      name VARCHAR(255) UNIQUE NOT NULL,
+      music_genre VARCHAR(255) NOT NULL,
+      responsible VARCHAR(255) NOT NULL
+  );
+  ```
   ```SQL
-  CREATE TABLE f4ma_shows (
-    id VARCHAR(255) PRIMARY KEY,
-    week_day VARCHAR(255) NOT NULL,
-    start_time INT(11) NOT NULL,
-    end_time INT(11) NOT NULL,
-    band_id VARCHAR(255),
-    FOREIGN KEY (band_id) REFERENCES f4ma_bands (id)
-);
-```
+    CREATE TABLE f4ma_shows (
+      id VARCHAR(255) PRIMARY KEY,
+      week_day VARCHAR(255) NOT NULL,
+      start_time INT(11) NOT NULL,
+      end_time INT(11) NOT NULL,
+      band_id VARCHAR(255),
+      FOREIGN KEY (band_id) REFERENCES f4ma_bands (id)
+  );
+  ```
     
 1. Run npm run start on your CLI
 
