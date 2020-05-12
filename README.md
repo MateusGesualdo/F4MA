@@ -12,13 +12,13 @@
    * start .env
   
 1. Paste the following environment variables into your **.env** file, replacing their values for those of your own SQL database:
-  ```
-  DB_HOST = mysql
-  DB_USER = me
-  DB_PASSWORD = xxxxxx
-  DB_NAME = mytable
-  JWT_KEY = xxxxxx
-  ```
+    ```
+    DB_HOST = mysql
+    DB_USER = me
+    DB_PASSWORD = xxxxxx
+    DB_NAME = mytable
+    JWT_KEY = xxxxxx
+    ```
 1.Run the following queries on your SQL database:
 
     
