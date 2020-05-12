@@ -6,10 +6,7 @@
 * MySql
 * Knex
 * Uuid
-* Bcrypt
-* JsonWebToken
 * Dotenv
-* Cors
 
 ## Running the project
 
