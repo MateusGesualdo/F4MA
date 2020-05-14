@@ -8,8 +8,10 @@ import GUIEndpoint from "./endpoints/GUI/GUIEndpoint";
 require("dotenv/config")
 
 const app = express();
+const cors = require("cors")
 
 app.use(express.json()); 
+app.use(cors())
 
 app.post('/bands', createBandEndpoint)
 app.get('/bands', getBandEndpoint)
