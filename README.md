@@ -7,6 +7,7 @@
 * Knex
 * Uuid
 * Dotenv
+* Cors
 
 ## Running the project
 
